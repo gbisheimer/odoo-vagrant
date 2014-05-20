@@ -12,6 +12,6 @@ Pasos para poder utilizarla:
 * Esperar a que se baje el archivo de la VM (por defecto la instalación se realiza sobre un ubuntu/trusty64-clouding) y se instalen y configuren todos los paquetes correspondientes.
 * Al finalizar la instalación, se puede acceder a la VM mediante ssh en el puerto 2222 de la máquina local.
 * usuario y password por defecto = 'vagrant'
-* Abrir la carpeta /home/vagrant/oodo y ejecutar `python ./openerp-server -s --db_user=odoo --db_password=odoo --db_host=localhost`
-* Esto crea un archivo de configuración con los valores por defecto en ~/.terp_serverrc. Luego se puede invocar este archivo desde la línea de comando mediante `python ./openerp-server -c ~/.terp_serverrc`
+* Abrir la carpeta /home/vagrant/oodo y ejecutar `python ./openerp-server -s --db_user=odoo --db_password=odoo --db_host=localhost --addons-path=addons`
+* Esto crea un archivo de configuración con los valores por defecto en ~/.openerp_serverrc. Luego se puede invocar este archivo desde la línea de comando mediante `python ./openerp-server -c ~/.openerp_serverrc`
  

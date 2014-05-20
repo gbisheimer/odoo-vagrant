@@ -1,60 +1,48 @@
 # odoo base system required packages
-$python_libs_base = [ 
-"python-dev",
-"python-nltk",
-"build-essential",
-"python-setuptools",
-"postgresql",
-"bzr",
-"graphviz",
-"ghostscript",
-"python-dateutil",
-"python-feedparser",
-"python-gdata",
-"python-ldap",
-"python-libxslt1",
-"python-lxml",
-"python-mako",
-"python-openid",
-"python-psycopg2",
-"python-pybabel",
-"python-pychart",
-"python-pydot",
-"python-pyparsing",
-"python-reportlab",
-"python-simplejson",
-"python-tz",
-"python-vatnumber",
-"python-vobject",
-"python-webdav",
-"python-werkzeug",
-"python-xlwt",
-"python-yaml",
-"python-imaging",
-"python-matplotlib",
-"python-docutils",
-"python-unittest2",
-"python-mock",
-"python-jinja2",
-"python-psutil",
-"python-beautifulsoup",
-"python-geoip",
-"wkhtmltopdf",
-"git",
-]
-
-package { $python_libs_base:
-  ensure  => present,
-}
+package { "python-dev": ensure => present }
+package { "python-nltk": ensure => present }
+package { "build-essential": ensure => present }
+package { "python-setuptools": ensure => present }
+package { "postgresql": ensure => present }
+package { "bzr": ensure => present }
+package { "graphviz": ensure => present }
+package { "ghostscript": ensure => present }
+package { "python-dateutil": ensure => present }
+package { "python-feedparser": ensure => present }
+package { "python-gdata": ensure => present }
+package { "python-ldap": ensure => present }
+package { "python-libxslt1": ensure => present }
+package { "python-lxml": ensure => present }
+package { "python-mako": ensure => present }
+package { "python-openid": ensure => present }
+package { "python-psycopg2": ensure => present }
+package { "python-pybabel": ensure => present }
+package { "python-pychart": ensure => present }
+package { "python-pydot": ensure => present }
+package { "python-pyparsing": ensure => present }
+package { "python-reportlab": ensure => present }
+package { "python-simplejson": ensure => present }
+package { "python-tz": ensure => present }
+package { "python-vatnumber": ensure => present }
+package { "python-vobject": ensure => present }
+package { "python-webdav": ensure => present }
+package { "python-werkzeug": ensure => present }
+package { "python-xlwt": ensure => present }
+package { "python-yaml": ensure => present }
+package { "python-imaging": ensure => present }
+package { "python-matplotlib": ensure => present }
+package { "python-docutils": ensure => present }
+package { "python-unittest2": ensure => present }
+package { "python-mock": ensure => present }
+package { "python-jinja2": ensure => present }
+package { "python-psutil": ensure => present }
+package { "python-beautifulsoup": ensure => present }
+package { "python-geoip": ensure => present }
+package { "wkhtmltopdf": ensure => present }
+package { "git": ensure => present }
 
 # odoo_ar localization required packages
-$python_libs_odoo_ar = [
-"python-geopy",
-]
-
-package { $python_libs_odoo_ar:
-  ensure  => present,
-}
+package { "python-geopy": ensure  => 'present' }
 
 # Installs PostgreSQL 9.3 server from PGDG repository
 class {'postgresql::globals':
@@ -93,28 +81,28 @@ postgresql::server::pg_hba_rule { 'allow odoo framework to access app database':
 }
 
 vcsrepo { "/vagrant/odoo":
-    ensure => latest,
-    provider => git,
-    source => 'https://github.com/odoo/odoo.git',
-    revision => 'master',
+  ensure => latest,
+  provider => git,
+  source => 'https://github.com/odoo/odoo.git',
+  revision => 'master',
 }
 
 file { "/home/vagrant/odoo":
-    ensure => link,
+  ensure => link,
 	target => "/vagrant/odoo",
 }
 
 # Downloads wkhtmltopdf 0.12.0 and replaces the installed binary file
 wget::fetch { 'http://hivelocity.dl.sourceforge.net/project/wkhtmltopdf/0.12.0/wkhtmltox-linux-amd64_0.12.0-03c001d.tar.xz':
-    destination => '/tmp/wkhtmltox-linux.tar.xz',
-    #cache_dir   => '/var/cache/wget',
+  destination => '/tmp/wkhtmltox-linux.tar.xz',
+  cache_dir   => '/var/cache',
 	#cache_file  => 'wkhtmltox-linux.tar.xz',
 	require => Package["wkhtmltopdf"],
 }->
 exec { 'tar -xf /tmp/wkhtmltox-linux.tar.xz':
-    cwd => "/tmp",
+  cwd => "/tmp",
 	creates => "/tmp/wkhtmltox/bin/wkhtmltopdf",
-	path => ["/usr/bin", "/usr/sbin"],
+	path => ["/bin", "/usr/bin", "/usr/sbin"],
 }->
 file { "/usr/bin/wkhtmltopdf":
 	ensure => file,
