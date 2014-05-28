@@ -53,9 +53,10 @@ class {'postgresql::globals':
 }->
 class { 'postgresql::server':
   ensure => 'present',
-  ip_mask_deny_postgres_user => '0.0.0.0/32',
+  ip_mask_deny_postgres_user => '0.0.0.0/32', # Allows posgres user connection from any host
   ip_mask_allow_all_users    => '0.0.0.0/0',
   listen_addresses => '*',
+  postgres_password => 'postgres',            # Sets default postgres user password
 }
 
 # Installs contrib modules
@@ -73,8 +74,9 @@ postgresql::server::role { 'odoo':
 
 # Adds odoo user to pg_hba.conf rules
 postgresql::server::pg_hba_rule { 'allow odoo framework to access app database':
-  description => "Allows peer authentication to user odoo",
-  type => 'local',
+  description => "Allows md5 authentication to user odoo",
+  type => 'host',
+  address => '0.0.0.0/0',
   database => 'all',
   user => 'odoo',
   auth_method => 'md5',
