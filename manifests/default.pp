@@ -1,12 +1,13 @@
 # odoo base system required packages
-package { "python-dev": ensure => present }
-package { "python-nltk": ensure => present }
 package { "build-essential": ensure => present }
-package { "python-setuptools": ensure => present }
 package { "postgresql": ensure => present }
 package { "bzr": ensure => present }
 package { "graphviz": ensure => present }
 package { "ghostscript": ensure => present }
+package { "python-setuptools": ensure => present }
+package { "python-pip": ensure => present }
+package { "python-dev": ensure => present }
+package { "python-nltk": ensure => present }
 package { "python-dateutil": ensure => present }
 package { "python-feedparser": ensure => present }
 package { "python-gdata": ensure => present }
@@ -38,11 +39,16 @@ package { "python-jinja2": ensure => present }
 package { "python-psutil": ensure => present }
 package { "python-beautifulsoup": ensure => present }
 package { "python-geoip": ensure => present }
+package { "python-requests": ensure => present }
+package { "python-gevent": ensure => present }
+package { "python-markupsafe": ensure => present }
+package { "python-pil": ensure => present }
+package { "wget": ensure => present }
 package { "wkhtmltopdf": ensure => present }
 package { "git": ensure => present }
 
 # odoo_ar localization required packages
-package { "python-geopy": ensure  => 'present' }
+package { "python-geopy": ensure  => present }
 
 # Installs PostgreSQL 9.3 server from PGDG repository
 class {'postgresql::globals':
@@ -89,25 +95,30 @@ vcsrepo { "/vagrant/odoo":
   revision => 'master',
 }
 
-file { "/home/vagrant/odoo":
+file { "/home/ubuntu/odoo":
   ensure => link,
 	target => "/vagrant/odoo",
 }
 
-# Downloads wkhtmltopdf 0.12.0 and replaces the installed binary file
-wget::fetch { 'http://hivelocity.dl.sourceforge.net/project/wkhtmltopdf/0.12.0/wkhtmltox-linux-amd64_0.12.0-03c001d.tar.xz':
-  destination => '/tmp/wkhtmltox-linux.tar.xz',
-  cache_dir   => '/var/cache',
-	#cache_file  => 'wkhtmltox-linux.tar.xz',
-	require => Package["wkhtmltopdf"],
-}->
-exec { 'tar -xf /tmp/wkhtmltox-linux.tar.xz':
-  cwd => "/tmp",
-	creates => "/tmp/wkhtmltox/bin/wkhtmltopdf",
-	path => ["/bin", "/usr/bin", "/usr/sbin"],
-}->
-file { "/usr/bin/wkhtmltopdf":
-	ensure => file,
-	source => "/tmp/wkhtmltox/bin/wkhtmltopdf",
-	source_permissions => ignore,
+file { "/home/ubuntu/odoo-addons":
+  ensure => link,
+  target => "/vagrant/odoo-addons",
 }
+
+# Downloads wkhtmltopdf 0.12.0 and replaces the installed binary file
+# wget::fetch { 'http://hivelocity.dl.sourceforge.net/project/wkhtmltopdf/0.12.0/wkhtmltox-linux-amd64_0.12.0-03c001d.tar.xz':
+#   destination => '/tmp/wkhtmltox-linux.tar.xz',
+#   cache_dir   => '/var/cache',
+# 	# cache_file  => 'wkhtmltox-linux.tar.xz',
+# 	require => Package["wkhtmltopdf"],
+# }->
+# exec { 'tar -xf /tmp/wkhtmltox-linux.tar.xz':
+#   cwd => "/tmp",
+# 	creates => "/tmp/wkhtmltox/bin/wkhtmltopdf",
+# 	path => ["/bin", "/usr/bin", "/usr/sbin"],
+# }->
+# file { "/usr/bin/wkhtmltopdf":
+# 	ensure => file,
+# 	source => "/tmp/wkhtmltox/bin/wkhtmltopdf",
+# 	source_permissions => ignore,
+# }

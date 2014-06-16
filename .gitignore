@@ -1,2 +1,5 @@
 .*
-odoo*
+odoo
+odoo-addons/*
+# compiled python files
+*.py[co]
