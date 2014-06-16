@@ -47,9 +47,6 @@ package { "wget": ensure => present }
 package { "wkhtmltopdf": ensure => present }
 package { "git": ensure => present }
 
-# odoo_ar localization required packages
-package { "python-geopy": ensure  => present }
-
 # Installs PostgreSQL 9.3 server from PGDG repository
 class {'postgresql::globals':
   version => '9.3',
@@ -95,30 +92,20 @@ vcsrepo { "/vagrant/odoo":
   revision => 'master',
 }
 
-file { "/home/ubuntu/odoo":
-  ensure => link,
-	target => "/vagrant/odoo",
-}
-
-file { "/home/ubuntu/odoo-addons":
-  ensure => link,
-  target => "/vagrant/odoo-addons",
-}
-
 # Downloads wkhtmltopdf 0.12.0 and replaces the installed binary file
-# wget::fetch { 'http://hivelocity.dl.sourceforge.net/project/wkhtmltopdf/0.12.0/wkhtmltox-linux-amd64_0.12.0-03c001d.tar.xz':
-#   destination => '/tmp/wkhtmltox-linux.tar.xz',
-#   cache_dir   => '/var/cache',
-# 	# cache_file  => 'wkhtmltox-linux.tar.xz',
-# 	require => Package["wkhtmltopdf"],
-# }->
-# exec { 'tar -xf /tmp/wkhtmltox-linux.tar.xz':
-#   cwd => "/tmp",
-# 	creates => "/tmp/wkhtmltox/bin/wkhtmltopdf",
-# 	path => ["/bin", "/usr/bin", "/usr/sbin"],
-# }->
-# file { "/usr/bin/wkhtmltopdf":
-# 	ensure => file,
-# 	source => "/tmp/wkhtmltox/bin/wkhtmltopdf",
-# 	source_permissions => ignore,
-# }
+wget::fetch { 'http://hivelocity.dl.sourceforge.net/project/wkhtmltopdf/0.12.0/wkhtmltox-linux-amd64_0.12.0-03c001d.tar.xz':
+  destination => '/tmp/wkhtmltox-linux.tar.xz',
+  cache_dir   => '/var/cache',
+	# cache_file  => 'wkhtmltox-linux.tar.xz',
+	require => Package["wkhtmltopdf"],
+}->
+exec { 'tar -xf /tmp/wkhtmltox-linux.tar.xz':
+  cwd => "/tmp",
+	creates => "/tmp/wkhtmltox/bin/wkhtmltopdf",
+	path => ["/bin", "/usr/bin", "/usr/sbin"],
+}->
+file { "/usr/bin/wkhtmltopdf":
+	ensure => file,
+	source => "/tmp/wkhtmltox/bin/wkhtmltopdf",
+	source_permissions => ignore,
+}
