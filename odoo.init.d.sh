@@ -17,8 +17,8 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="openerp-server"
 NAME=openerp-server
-DAEMON=/vagrant/odoo/odoo/openerp-server
-CONFIG=/vagrant/odoo/.openerp_serverrc
+DAEMON=/vagrant/odoo/openerp-server
+CONFIG=/vagrant/.openerp_serverrc
 LOGFILE=/var/log/openerp/openerp-server.log
 USER=odoo
 PIDFILE=/var/run/$NAME.pid
