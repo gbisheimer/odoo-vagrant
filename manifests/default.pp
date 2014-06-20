@@ -46,6 +46,8 @@ package { "python-pil": ensure => present }
 package { "wget": ensure => present }
 package { "wkhtmltopdf": ensure => present }
 package { "git": ensure => present }
+package { "python-geopy": ensure => present }
+package { "mc": ensure => present }
 
 # Installs PostgreSQL 9.3 server from PGDG repository
 class {'postgresql::globals':
