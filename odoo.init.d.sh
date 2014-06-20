@@ -19,11 +19,10 @@ DESC="openerp-server"
 NAME=openerp-server
 DAEMON=/vagrant/odoo/openerp-server
 CONFIG=/vagrant/.openerp_serverrc
-LOGFILE=/var/log/openerp/openerp-server.log
-USER=odoo
+USER=vagrant
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
-DAEMON_ARGS="--config=${CONFIG} --logfile=${LOGFILE}"
+DAEMON_ARGS="--config=${CONFIG}"
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0

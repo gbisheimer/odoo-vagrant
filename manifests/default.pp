@@ -94,6 +94,16 @@ vcsrepo { "/vagrant/odoo":
   revision => 'master',
 }
 
+file { "/etc/init.d/odoo":
+  ensure => link,
+  target => '/vagrant/odoo.init.d.sh',
+}
+
+file { "/usr/bin/odoo":
+  ensure => link,
+  target => '/vagrant/odoo/odoo.py',
+}
+
 # Downloads wkhtmltopdf 0.12.0 and replaces the installed binary file
 wget::fetch { 'http://hivelocity.dl.sourceforge.net/project/wkhtmltopdf/0.12.0/wkhtmltox-linux-amd64_0.12.0-03c001d.tar.xz':
   destination => '/tmp/wkhtmltox-linux.tar.xz',
