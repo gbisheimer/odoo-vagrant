@@ -10,7 +10,10 @@ Definición de una máquina virtual Vagrant para ejecutar ODOO (ex OpenERP) en m
 * En caso de tener una copia local de la rama de [ODOO](https://github.com/odoo/odoo.git), copiarla/moverla a la carpeta del repositiorio. Sino, se bajará automáticamente durante la instalación. Por defecto se baja el branch MASTER. En caso de querer trabajar en otra rama, modificar el archivo [manifests/default.pp](https://github.com/gbisheimer/odoo-vagrant/blob/master/manifests/default.pp#L92).
 * Abrir una consola en la carpeta del repositorio y ejecutar `vagrant up`
 * Esperar a que se baje el archivo de la VM (por defecto la instalación se realiza sobre un ubuntu/trusty64-clouding) y se instalen y configuren todos los paquetes correspondientes.
-* Al finalizar la instalación, se puede acceder a la VM mediante SSH en el puerto 2222 de la máquina local. El usuario y password por defecto es 'vagrant'
+* Al finalizar la instalación, se puede acceder a la consola de la VM de las siguientes formas (**El usuario y password por defecto es 'vagrant'**)
+  1. Mediante SSH en el puerto 2222 de la máquina local (localhost:2222)
+  2. En linux puede usarse el comando `vagrant ssh`
+  3. Abriendo un navegador WEB en el sitio http://localhost:4200
 * Vagrant monta automáticamente la carpeta del repositorio en la carpeta `/vagrant` de la máquina virtual, por lo que la edición del código fuente lo podemos hacer directamente en la máquina host y estos cambios se veran reflejados en la VM automáticamente.
 * Al ejecutar ODOO por primera vez, abrir una conexión ssh a la VM, abrir la carpeta /vagrant/oodo y ejecutar `python ./openerp-server -s --db_user=odoo --db_password=odoo --db_host=localhost --addons-path=addons -c /vagrant/.openerp_serverrc`. Esto crea un archivo de configuración con los valores por defecto en /vagrant/.openerp_serverrc.
 * Para ejecuciones posteriores se correr el servidor mediante `python ./openerp-server -c /vagrant/.openerp_serverrc`. Odoo cargará automáticamente el archivo de configuración por defecto creado en el punto anterior. También puede utilizarse `sudo service odoo [start|stop|restart]` para controlar el inicio del servidor.
