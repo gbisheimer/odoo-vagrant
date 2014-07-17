@@ -44,7 +44,6 @@ package { "python-gevent": ensure => present }
 package { "python-markupsafe": ensure => present }
 package { "python-pil": ensure => present }
 package { "wget": ensure => present }
-package { "wkhtmltopdf": ensure => present }
 package { "git": ensure => present }
 package { "python-geopy": ensure => present }
 package { "mc": ensure => present }
@@ -106,20 +105,13 @@ file { "/usr/bin/odoo":
   target => '/vagrant/odoo/odoo.py',
 }
 
-# Downloads wkhtmltopdf 0.12.0 and replaces the installed binary file
-wget::fetch { 'http://hivelocity.dl.sourceforge.net/project/wkhtmltopdf/0.12.0/wkhtmltox-linux-amd64_0.12.0-03c001d.tar.xz':
-  destination => '/tmp/wkhtmltox-linux.tar.xz',
+Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
+
+# Downloads wkhtmltopdf 0.12.1 and installs package
+wget::fetch { 'http://ufpr.dl.sourceforge.net/project/wkhtmltopdf/0.12.1/wkhtmltox-0.12.1_linux-trusty-amd64.deb':
+  destination => '/tmp/wkhtmltox-linux.deb',
   cache_dir   => '/var/cache',
-	# cache_file  => 'wkhtmltox-linux.tar.xz',
-	require => Package["wkhtmltopdf"],
 }->
-exec { 'tar -xf /tmp/wkhtmltox-linux.tar.xz':
+exec { 'dpkg --install /tmp/wkhtmltox-linux.deb':
   cwd => "/tmp",
-	creates => "/tmp/wkhtmltox/bin/wkhtmltopdf",
-	path => ["/bin", "/usr/bin", "/usr/sbin"],
-}->
-file { "/usr/bin/wkhtmltopdf":
-	ensure => file,
-	source => "/tmp/wkhtmltox/bin/wkhtmltopdf",
-	source_permissions => ignore,
 }
