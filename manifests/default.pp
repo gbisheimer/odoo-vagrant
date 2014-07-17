@@ -91,7 +91,7 @@ postgresql::server::pg_hba_rule { 'allow odoo framework to access app database':
 }
 
 vcsrepo { "/vagrant/odoo":
-  ensure => latest,
+  ensure => present,
   provider => git,
   source => 'https://github.com/odoo/odoo.git',
   revision => '8.0',
