@@ -43,6 +43,8 @@ package { "python-requests": ensure => present }
 package { "python-gevent": ensure => present }
 package { "python-markupsafe": ensure => present }
 package { "python-pil": ensure => present }
+package { "python-decorator": ensure => present }
+package { "python-pypdf": ensure => present }
 package { "wget": ensure => present }
 package { "git": ensure => present }
 package { "python-geopy": ensure => present }
@@ -92,7 +94,7 @@ vcsrepo { "/vagrant/odoo":
   ensure => latest,
   provider => git,
   source => 'https://github.com/odoo/odoo.git',
-  revision => 'master',
+  revision => '8.0',
 }
 
 file { "/etc/init.d/odoo":
