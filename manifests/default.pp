@@ -60,7 +60,7 @@ class {'postgresql::globals':
   locale  => 'it_IT.utf8',
 }->
 class { 'postgresql::server':
-  ensure => 'present',
+  package_ensure => 'present',
   ip_mask_deny_postgres_user => '0.0.0.0/32', # Allows posgres user connection from any host
   ip_mask_allow_all_users    => '0.0.0.0/0',
   listen_addresses => '*',
