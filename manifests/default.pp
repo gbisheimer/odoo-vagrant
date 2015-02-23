@@ -45,6 +45,7 @@ package { "python-markupsafe": ensure => present }
 package { "python-pil": ensure => present }
 package { "python-decorator": ensure => present }
 package { "python-pypdf": ensure => present }
+package { "python-passlib": ensure => present }
 package { "wget": ensure => present }
 package { "git": ensure => present }
 package { "python-geopy": ensure => present }
