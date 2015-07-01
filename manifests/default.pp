@@ -110,8 +110,8 @@ file { "/usr/bin/odoo":
 
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 
-# Downloads wkhtmltopdf 0.12.1 and installs package
-wget::fetch { 'http://ufpr.dl.sourceforge.net/project/wkhtmltopdf/0.12.1/wkhtmltox-0.12.1_linux-trusty-amd64.deb':
+# Downloads wkhtmltopdf 0.12.2.1 and installs package
+wget::fetch { 'http://ufpr.dl.sourceforge.net/project/wkhtmltopdf/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb':
   destination => '/tmp/wkhtmltox-linux.deb',
   cache_dir   => '/var/cache',
 }->
